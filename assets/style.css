@@ -21,7 +21,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "TH Niramit AS", "TH Niramit", "Niramit", "Tahoma", system-ui, -apple-system, sans-serif;
+  font-family: "TH Sarabun New", "Sarabun", "Tahoma", system-ui, -apple-system, sans-serif;
   font-synthesis: none;
   background: var(--bg);
   color: var(--text);
@@ -635,5 +635,149 @@ th {
   th,
   td {
     font-size: 1rem;
+  }
+}
+
+
+/* ปรับฟอนต์และขนาดสำหรับ TH Sarabun New */
+body {
+  font-family: "TH Sarabun New", "Sarabun", "Tahoma", system-ui, -apple-system, sans-serif;
+  font-size: 22px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.9rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.eyebrow {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 1.45rem;
+}
+
+.badge {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.menu-card strong {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.menu-card small {
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+
+.field span {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.field small {
+  font-size: 1.18rem;
+}
+
+input,
+select,
+textarea {
+  font-family: "TH Sarabun New", "Sarabun", "Tahoma", system-ui, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.35;
+  padding: 15px 16px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 1.28rem;
+}
+
+.button,
+button {
+  font-family: "TH Sarabun New", "Sarabun", "Tahoma", system-ui, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+th {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+td {
+  font-size: 1.28rem;
+  line-height: 1.4;
+}
+
+.message,
+.records-summary,
+.info-grid span {
+  font-size: 1.28rem;
+}
+
+.type-pill {
+  font-size: 1rem;
+}
+
+@media (max-width: 520px) {
+  body {
+    font-size: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.55rem;
+  }
+
+  .menu-card strong {
+    font-size: 1.65rem;
+  }
+
+  .menu-card small {
+    font-size: 1.2rem;
+  }
+
+  .field span,
+  input,
+  select,
+  textarea {
+    font-size: 1.25rem;
+  }
+
+  .button,
+  button {
+    font-size: 1.18rem;
+  }
+
+  th,
+  td {
+    font-size: 1.15rem;
   }
 }
