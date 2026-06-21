@@ -21,7 +21,8 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Noto Sans Thai", "Tahoma", system-ui, -apple-system, sans-serif;
+  font-family: "TH Niramit AS", "TH Niramit", "Niramit", "Tahoma", system-ui, -apple-system, sans-serif;
+  font-synthesis: none;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
