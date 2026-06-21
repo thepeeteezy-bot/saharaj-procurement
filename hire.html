@@ -83,6 +83,12 @@
             <input type="text" name="project_no" maxlength="120"
                    placeholder="เช่น 67000000000" required>
           </label>
+
+          <label class="field field-full">
+            <span>ฝ่ายงานที่รับผิดชอบ <b>*</b></span>
+            <input type="text" name="department" maxlength="200"
+                   placeholder="เช่น ฝ่ายบริหารงานทั่วไป ฝ่ายวิชาการ ฝ่ายงบประมาณ หรือฝ่ายบุคคล" required>
+          </label>
         </div>
 
         <div id="formMessage" class="message" hidden></div>
@@ -120,12 +126,13 @@
               <th class="align-right">จำนวนเงิน</th>
               <th>สถานประกอบการ</th>
               <th>เลขผู้เสียภาษี</th>
+              <th>ฝ่ายงานที่รับผิดชอบ</th>
               <th>เลขที่โครงการ</th>
             </tr>
           </thead>
           <tbody class="formHistoryBody">
             <tr>
-              <td colspan="7" class="empty-state">กำลังโหลดรายการ…</td>
+              <td colspan="8" class="empty-state">กำลังโหลดรายการ…</td>
             </tr>
           </tbody>
         </table>
