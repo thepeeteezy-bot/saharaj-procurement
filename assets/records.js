@@ -52,6 +52,7 @@
         item.document_no,
         item.subject,
         item.vendor,
+        item.department,
         item.tax_id,
         item.project_no
       ].join(" ").toLowerCase();
@@ -64,7 +65,7 @@
     const visible = getVisibleRecords();
 
     if (!visible.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ไม่พบข้อมูล</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ไม่พบข้อมูล</td></tr>';
     } else {
       tbody.innerHTML = visible.map((item) => {
         const typeName = item.type === "purchase" ? "ใบสั่งซื้อ" : "ใบสั่งจ้าง";
@@ -79,6 +80,7 @@
             <td class="align-right">${formatAmount(item.amount)}</td>
             <td>${escapeHtml(item.vendor)}</td>
             <td>${escapeHtml(item.tax_id)}</td>
+            <td>${escapeHtml(item.department || "")}</td>
             <td>${escapeHtml(item.project_no)}</td>
           </tr>
         `;
@@ -92,11 +94,11 @@
 
   const loadRecords = async () => {
     message.hidden = true;
-    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">กำลังโหลดข้อมูล…</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">กำลังโหลดข้อมูล…</td></tr>';
 
     if (!API_URL || API_URL.includes("PASTE_YOUR")) {
       showMessage("ยังไม่ได้กำหนด API_URL ในไฟล์ assets/config.js");
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ยังไม่ได้เชื่อมต่อ Google Apps Script</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ยังไม่ได้เชื่อมต่อ Google Apps Script</td></tr>';
       return;
     }
 
@@ -119,7 +121,7 @@
     } catch (error) {
       console.error(error);
       showMessage("โหลดข้อมูลไม่สำเร็จ กรุณาตรวจสอบ URL ของ Web App และสิทธิ์การเผยแพร่");
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ไม่สามารถโหลดข้อมูลได้</td></tr>';
     }
   };
 
@@ -136,7 +138,7 @@
     }
 
     const rows = [
-      ["เลขที่", "วันที่", "เรื่อง", "จำนวนเงิน", "สถานประกอบการ", "เลขผู้เสียภาษี", "เลขที่โครงการ"],
+      ["เลขที่", "วันที่", "เรื่อง", "จำนวนเงิน", "สถานประกอบการ", "เลขผู้เสียภาษี", "ฝ่ายงานที่รับผิดชอบ", "เลขที่โครงการ"],
       ...visible.map((item) => [
         item.document_no,
         item.date,
@@ -144,6 +146,7 @@
         item.amount,
         item.vendor,
         item.tax_id,
+        item.department || "",
         item.project_no
       ])
     ];

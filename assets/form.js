@@ -30,7 +30,7 @@
   const validateForm = () => {
     clearValidation();
 
-    const requiredFields = ["date", "subject", "amount", "vendor", "tax_id", "project_no"];
+    const requiredFields = ["date", "subject", "amount", "vendor", "tax_id", "project_no", "department"];
     for (const fieldName of requiredFields) {
       const input = form.elements[fieldName];
       if (!String(input.value || "").trim()) {

@@ -48,7 +48,7 @@
 
   const render = (records) => {
     if (!records.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ยังไม่มีรายการที่บันทึก</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ยังไม่มีรายการที่บันทึก</td></tr>';
       countLabel.textContent = "0 รายการ";
       totalLabel.textContent = "รวม 0.00 บาท";
       return;
@@ -62,6 +62,7 @@
         <td class="align-right">${formatAmount(item.amount)}</td>
         <td>${escapeHtml(item.vendor)}</td>
         <td>${escapeHtml(item.tax_id)}</td>
+        <td>${escapeHtml(item.department || "")}</td>
         <td>${escapeHtml(item.project_no)}</td>
       </tr>
     `).join("");
@@ -77,11 +78,11 @@
 
   const loadFormHistory = async () => {
     clearMessage();
-    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">กำลังโหลดรายการ…</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">กำลังโหลดรายการ…</td></tr>';
 
     if (!API_URL || API_URL.includes("PASTE_YOUR")) {
       showMessage("ยังไม่ได้กำหนด API_URL ในไฟล์ assets/config.js");
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ยังไม่ได้เชื่อมต่อ Google Apps Script</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ยังไม่ได้เชื่อมต่อ Google Apps Script</td></tr>';
       return;
     }
 
@@ -109,7 +110,7 @@
     } catch (error) {
       console.error(error);
       showMessage("โหลดข้อมูลไม่สำเร็จ กรุณาตรวจสอบ URL และการ Deploy ของ Google Apps Script");
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ไม่สามารถโหลดข้อมูลได้</td></tr>';
     } finally {
       if (refreshButton) {
         refreshButton.disabled = false;

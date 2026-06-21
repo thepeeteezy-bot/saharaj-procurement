@@ -42,7 +42,7 @@
   const loadRecentRecords = async () => {
     if (!API_URL || API_URL.includes("PASTE_YOUR")) {
       showMessage("ยังไม่ได้เชื่อมต่อ Google Apps Script กรุณากำหนด API_URL ใน assets/config.js");
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ยังไม่มีการเชื่อมต่อฐานข้อมูล</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ยังไม่มีการเชื่อมต่อฐานข้อมูล</td></tr>';
       return;
     }
 
@@ -63,7 +63,7 @@
       const recent = result.data.slice(0, 8);
 
       if (!recent.length) {
-        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ยังไม่มีรายการที่บันทึก</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ยังไม่มีรายการที่บันทึก</td></tr>';
         countLabel.textContent = "0 รายการ";
         totalLabel.textContent = "รวม 0.00 บาท";
         return;
@@ -83,6 +83,7 @@
             <td class="align-right">${formatAmount(item.amount)}</td>
             <td>${escapeHtml(item.vendor)}</td>
             <td>${escapeHtml(item.tax_id)}</td>
+            <td>${escapeHtml(item.department || "")}</td>
             <td>${escapeHtml(item.project_no)}</td>
           </tr>
         `;
@@ -98,7 +99,7 @@
     } catch (error) {
       console.error(error);
       showMessage("โหลดรายการไม่สำเร็จ กรุณาตรวจสอบ URL และการ Deploy ของ Google Apps Script");
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state">ไม่สามารถโหลดข้อมูลได้</td></tr>';
     }
   };
 
