@@ -1572,3 +1572,232 @@ tbody tr:hover {
     line-height: 1.12;
   }
 }
+
+
+/* ================================
+   ธีมสีประจำโรงเรียน ม่วง–แดง
+   ================================ */
+:root {
+  --navy: #6f2a78;
+  --navy-dark: #3f173f;
+  --gold: #c93f52;
+  --gold-soft: #faeef3;
+  --paper: #ffffff;
+  --bg: #fbf7fb;
+  --text: #3c2638;
+  --muted: #76616f;
+  --line: #e6d5e2;
+  --success: #2f7d4a;
+  --danger: #b52f3f;
+  --shadow: 0 12px 30px rgba(92, 30, 86, 0.10);
+  --radius: 18px;
+  --accent-1: #7b2d86;
+  --accent-2: #b13a66;
+  --accent-3: #d94b57;
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 12%, rgba(123, 45, 134, 0.10), transparent 24%),
+    radial-gradient(circle at 88% 15%, rgba(217, 75, 87, 0.10), transparent 22%),
+    linear-gradient(180deg, #fdfafd 0%, #faf3f7 100%);
+  color: var(--text);
+}
+
+body::before {
+  display: none;
+}
+
+.site-header {
+  background:
+    radial-gradient(circle at top left, rgba(194, 84, 154, 0.22), transparent 28%),
+    radial-gradient(circle at top right, rgba(235, 88, 98, 0.20), transparent 26%),
+    linear-gradient(135deg, #3e173f 0%, #6f2a78 52%, #a42d59 76%, #c83f4d 100%);
+  border-bottom: 4px solid #d94b57;
+  box-shadow: 0 10px 26px rgba(63, 23, 63, 0.18);
+}
+
+.site-header::after {
+  display: none;
+}
+
+.eyebrow {
+  color: #ffd8e2;
+  text-shadow: none;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.school-logo {
+  border-color: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 22px rgba(45, 14, 45, 0.24);
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: none;
+}
+
+.hero {
+  background:
+    linear-gradient(135deg, #ffffff 0%, #fbf0f7 58%, #fff0f1 100%);
+  border: 1px solid #ead4e4;
+}
+
+.hero::before,
+.hero::after {
+  display: none;
+}
+
+.hero h2,
+.section-heading h2,
+.recent-heading h3,
+.history-heading h2 {
+  color: #6b286f;
+}
+
+.badge {
+  background: linear-gradient(90deg, #f3e5f4, #fde8ec);
+  color: #7c2b64;
+  border: 1px solid #e8cfe0;
+  box-shadow: none;
+}
+
+.menu-card {
+  background: #ffffff;
+  border: 1px solid #e7d4e2;
+  box-shadow: 0 8px 22px rgba(92, 30, 86, 0.07);
+}
+
+.menu-card::before {
+  width: 7px;
+  background: linear-gradient(180deg, #6f2a78 0%, #a63868 52%, #d94b57 100%);
+}
+
+.menu-card::after {
+  display: none;
+}
+
+.menu-card:hover {
+  transform: translateY(-3px);
+  border-color: #c77ab0;
+  box-shadow: 0 14px 30px rgba(92, 30, 86, 0.12);
+}
+
+.menu-card strong {
+  color: #6b286f;
+}
+
+.menu-card small {
+  color: #76616f;
+}
+
+.menu-icon {
+  filter: none;
+}
+
+.arrow {
+  color: #c93f52;
+}
+
+.button-primary {
+  background: linear-gradient(135deg, #6f2a78 0%, #9b3267 55%, #c93f52 100%);
+  border: none;
+  box-shadow: 0 8px 18px rgba(111, 42, 120, 0.18);
+}
+
+.button-primary:hover {
+  background: linear-gradient(135deg, #5d2265 0%, #8c2d5d 55%, #b93448 100%);
+  box-shadow: 0 10px 22px rgba(111, 42, 120, 0.22);
+}
+
+.button-secondary {
+  background: linear-gradient(180deg, #fdf8fc 0%, #f7edf4 100%);
+  border-color: #e0c9d9;
+  color: #6b286f;
+}
+
+.button-outline {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 225, 235, 0.55);
+  color: #ffffff;
+}
+
+input,
+select,
+textarea {
+  background: #ffffff;
+  border: 1px solid #dcc5d5;
+  box-shadow: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #a93d79;
+  box-shadow: 0 0 0 4px rgba(169, 61, 121, 0.12);
+}
+
+.table-wrap {
+  border: 1px solid #e6d4e1;
+  box-shadow: none;
+}
+
+th {
+  background: linear-gradient(180deg, #f4e7f2 0%, #fce8ec 100%);
+  color: #66265f;
+}
+
+tbody tr:nth-child(even) {
+  background: #fcf8fb;
+}
+
+tbody tr:hover {
+  background: #faedf4;
+}
+
+.type-pill {
+  background: linear-gradient(90deg, #f0e2f2, #fce7eb);
+  color: #7a2b64;
+  border: 1px solid #e5cbdc;
+}
+
+.records-summary {
+  color: #752e6b;
+}
+
+.message.success {
+  background: #edf8f1;
+  border-color: #b7dcc4;
+}
+
+.message.error {
+  background: #fff1f3;
+  border-color: #efc0c7;
+}
+
+.site-footer {
+  color: #75616d;
+}
+
+.filter-button {
+  border-color: #e1cddd;
+  color: #6b286f;
+}
+
+.filter-button.active {
+  background: linear-gradient(135deg, #6f2a78, #c93f52);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+@media (max-width: 520px) {
+  .site-header {
+    background:
+      linear-gradient(145deg, #3f173f 0%, #702977 58%, #b73554 100%);
+  }
+}
