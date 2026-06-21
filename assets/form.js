@@ -108,6 +108,7 @@
       form.reset();
       form.elements.date.value = savedDate;
       showMessage(`บันทึกสำเร็จ เลขที่เอกสาร: ${result.document_no}`, "success");
+      document.dispatchEvent(new CustomEvent("document-saved", { detail: result }));
     } catch (error) {
       console.error(error);
       showMessage("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาตรวจสอบ URL ของ Web App และสิทธิ์การเผยแพร่", "error");
