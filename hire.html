@@ -88,6 +88,48 @@
         </div>
       </form>
     </section>
+
+    <section class="panel form-history-panel" aria-labelledby="hireHistoryTitle">
+      <div class="history-heading">
+        <div>
+          <span class="badge">HIRE HISTORY</span>
+          <h2 id="hireHistoryTitle">รายการใบสั่งจ้างที่บันทึกแล้ว</h2>
+          <p class="muted">แสดงรายการที่บันทึกไว้ใน Google Sheet เฉพาะประเภทนี้</p>
+        </div>
+        <button class="button button-secondary history-refresh-button" type="button">
+          โหลดข้อมูลใหม่
+        </button>
+      </div>
+
+      <div class="formHistoryMessage message" hidden></div>
+
+      <div class="table-wrap form-history-table-wrap">
+        <table class="form-history-table">
+          <thead>
+            <tr>
+              <th>เลขที่</th>
+              <th>วันที่</th>
+              <th>เรื่อง</th>
+              <th class="align-right">จำนวนเงิน</th>
+              <th>สถานประกอบการ</th>
+              <th>เลขผู้เสียภาษี</th>
+              <th>เลขที่โครงการ</th>
+            </tr>
+          </thead>
+          <tbody class="formHistoryBody">
+            <tr>
+              <td colspan="7" class="empty-state">กำลังโหลดรายการ…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="records-summary">
+        <span class="formHistoryCount">0 รายการ</span>
+        <span class="formHistoryTotal">รวม 0.00 บาท</span>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
@@ -96,5 +138,6 @@
 
   <script src="assets/config.js"></script>
   <script src="assets/form.js"></script>
+  <script src="assets/form-history.js"></script>
 </body>
 </html>
