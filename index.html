@@ -48,6 +48,46 @@
       </a>
     </section>
 
+
+    <section class="panel recent-panel" aria-labelledby="recentTitle">
+      <div class="recent-heading">
+        <div>
+          <span class="badge">RECENT DOCUMENTS</span>
+          <h3 id="recentTitle">รายการที่บันทึกแล้วล่าสุด</h3>
+          <p class="muted">แสดงข้อมูลล่าสุดจาก Google Sheet จำนวนไม่เกิน 8 รายการ</p>
+        </div>
+        <a class="button button-secondary" href="records.html">ดูรายการทั้งหมด</a>
+      </div>
+
+      <div id="homeRecordsMessage" class="message" hidden></div>
+
+      <div class="table-wrap recent-table-wrap">
+        <table class="recent-table">
+          <thead>
+            <tr>
+              <th>เลขที่</th>
+              <th>วันที่</th>
+              <th>เรื่อง</th>
+              <th class="align-right">จำนวนเงิน</th>
+              <th>สถานประกอบการ</th>
+              <th>เลขผู้เสียภาษี</th>
+              <th>เลขที่โครงการ</th>
+            </tr>
+          </thead>
+          <tbody id="homeRecordsBody">
+            <tr>
+              <td colspan="7" class="empty-state">กำลังโหลดรายการ…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="records-summary">
+        <span id="homeRecordCount">0 รายการ</span>
+        <span id="homeRecordTotal">รวม 0.00 บาท</span>
+      </div>
+    </section>
+
     <section class="panel info-panel">
       <h3>ข้อมูลที่จัดเก็บ</h3>
       <div class="info-grid">
@@ -65,5 +105,8 @@
   <footer class="site-footer">
     <div class="container">ระบบงานพัสดุ โรงเรียนสหราษฎร์รังสฤษดิ์</div>
   </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/home.js"></script>
 </body>
 </html>
