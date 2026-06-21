@@ -1,0 +1,9 @@
+ระบบใบสั่งซื้อ–สั่งจ้าง งานพัสดุ โรงเรียนสหราษฎร์รังสฤษดิ์
+
+1) อ่าน README.md
+2) สร้าง Google Sheet
+3) วาง google-apps-script/Code.gs ใน Apps Script
+4) ใส่ Spreadsheet ID
+5) Deploy เป็น Web app และคัดลอก URL /exec
+6) ใส่ URL ใน assets/config.js
+7) อัปโหลดทั้งหมดขึ้น GitHub แล้วเปิด GitHub Pages

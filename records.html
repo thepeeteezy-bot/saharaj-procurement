@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>รายการใบสั่งซื้อ–สั่งจ้าง | โรงเรียนสหราษฎร์รังสฤษดิ์</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header compact">
+    <div class="container header-inner">
+      <div>
+        <p class="eyebrow">งานพัสดุ โรงเรียนสหราษฎร์รังสฤษดิ์</p>
+        <h1>รายการใบสั่งซื้อ–สั่งจ้าง</h1>
+      </div>
+      <nav class="header-actions" aria-label="เมนู">
+        <a class="button button-outline" href="index.html">หน้าหลัก</a>
+        <a class="button button-outline" href="purchase.html">เพิ่มใบสั่งซื้อ</a>
+        <a class="button button-outline" href="hire.html">เพิ่มใบสั่งจ้าง</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container wide">
+    <section class="panel">
+      <div class="records-toolbar">
+        <div class="filter-group" role="group" aria-label="กรองประเภทเอกสาร">
+          <button class="filter-button active" data-filter="all" type="button">ทั้งหมด</button>
+          <button class="filter-button" data-filter="purchase" type="button">ใบสั่งซื้อ</button>
+          <button class="filter-button" data-filter="hire" type="button">ใบสั่งจ้าง</button>
+        </div>
+
+        <div class="toolbar-actions">
+          <label class="search-box">
+            <span class="sr-only">ค้นหา</span>
+            <input id="searchInput" type="search" placeholder="ค้นหาเลขที่ เรื่อง หรือสถานประกอบการ">
+          </label>
+          <button id="refreshButton" class="button button-secondary" type="button">โหลดข้อมูลใหม่</button>
+          <button id="csvButton" class="button button-primary" type="button">ดาวน์โหลด CSV</button>
+        </div>
+      </div>
+
+      <div id="recordsMessage" class="message" hidden></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>เลขที่</th>
+              <th>วันที่</th>
+              <th>เรื่อง</th>
+              <th class="align-right">จำนวนเงิน</th>
+              <th>สถานประกอบการ</th>
+              <th>เลขผู้เสียภาษี</th>
+              <th>เลขที่โครงการ</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody">
+            <tr>
+              <td colspan="7" class="empty-state">กำลังโหลดข้อมูล…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="records-summary">
+        <span id="recordCount">0 รายการ</span>
+        <span id="recordTotal">รวม 0.00 บาท</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">ระบบงานพัสดุ โรงเรียนสหราษฎร์รังสฤษดิ์</div>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/records.js"></script>
+</body>
+</html>

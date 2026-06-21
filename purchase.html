@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ใบสั่งซื้อ | โรงเรียนสหราษฎร์รังสฤษดิ์</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-document-type="purchase">
+  <header class="site-header compact">
+    <div class="container header-inner">
+      <div>
+        <p class="eyebrow">งานพัสดุ โรงเรียนสหราษฎร์รังสฤษดิ์</p>
+        <h1>ใบสั่งซื้อ</h1>
+      </div>
+      <nav class="header-actions" aria-label="เมนู">
+        <a class="button button-outline" href="index.html">หน้าหลัก</a>
+        <a class="button button-outline" href="records.html">รายการเอกสาร</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container narrow">
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <span class="badge">PURCHASE ORDER</span>
+          <h2>แบบบันทึกข้อมูลใบสั่งซื้อ</h2>
+        </div>
+        <p class="muted">ช่องที่มีเครื่องหมาย * จำเป็นต้องกรอก</p>
+      </div>
+
+      <form id="documentForm" class="document-form" novalidate>
+        <input type="hidden" name="type" value="purchase">
+
+        <div class="form-grid">
+          <label class="field">
+            <span>เลขที่เอกสาร</span>
+            <input type="text" name="document_no" maxlength="80"
+                   placeholder="เว้นว่างเพื่อให้ระบบออกเลขอัตโนมัติ">
+            <small>รูปแบบอัตโนมัติ: ซื้อ-001/2569</small>
+          </label>
+
+          <label class="field">
+            <span>วันที่ <b>*</b></span>
+            <input type="date" name="date" required>
+          </label>
+
+          <label class="field field-full">
+            <span>เรื่อง <b>*</b></span>
+            <input type="text" name="subject" maxlength="300"
+                   placeholder="เช่น ซื้อวัสดุสำนักงานเพื่อใช้ในการจัดการเรียนการสอน" required>
+          </label>
+
+          <label class="field">
+            <span>จำนวนเงิน (บาท) <b>*</b></span>
+            <input type="number" name="amount" min="0" step="0.01"
+                   inputmode="decimal" placeholder="0.00" required>
+          </label>
+
+          <label class="field">
+            <span>สถานประกอบการ <b>*</b></span>
+            <input type="text" name="vendor" maxlength="250"
+                   placeholder="ชื่อร้านค้า บริษัท หรือผู้รับจ้าง" required>
+          </label>
+
+          <label class="field">
+            <span>เลขประจำตัวผู้เสียภาษี <b>*</b></span>
+            <input type="text" name="tax_id" inputmode="numeric"
+                   pattern="[0-9]{13}" maxlength="13"
+                   placeholder="ตัวเลข 13 หลัก" required>
+          </label>
+
+          <label class="field">
+            <span>เลขที่โครงการ <b>*</b></span>
+            <input type="text" name="project_no" maxlength="120"
+                   placeholder="เช่น 67000000000" required>
+          </label>
+        </div>
+
+        <div id="formMessage" class="message" hidden></div>
+
+        <div class="form-actions">
+          <button class="button button-primary" type="submit" id="submitButton">
+            บันทึกใบสั่งซื้อ
+          </button>
+          <button class="button button-secondary" type="reset">ล้างข้อมูล</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">ระบบงานพัสดุ โรงเรียนสหราษฎร์รังสฤษดิ์</div>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/form.js"></script>
+</body>
+</html>
