@@ -36,7 +36,13 @@
       if (!String(input.value || "").trim()) {
         input.setAttribute("aria-invalid", "true");
         input.focus();
-        showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "error");
+
+        if (fieldName === "department") {
+          showMessage("กรุณากรอกฝ่ายงานที่รับผิดชอบ สามารถกรอกข้อความใดก็ได้ แต่ห้ามเว้นว่าง", "error");
+        } else {
+          showMessage("กรุณากรอกข้อมูลให้ครบถ้วน", "error");
+        }
+
         return false;
       }
     }

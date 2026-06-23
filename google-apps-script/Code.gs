@@ -1,12 +1,6 @@
 /**
  * ระบบใบสั่งซื้อ–สั่งจ้าง งานพัสดุ โรงเรียนสหราษฎร์รังสฤษดิ์
- *
- * วิธีใช้
- * 1) สร้าง Google Sheet
- * 2) เปิด Extensions > Apps Script
- * 3) วางโค้ดนี้ใน Code.gs
- * 4) แก้ค่า SPREADSHEET_ID
- * 5) Deploy เป็น Web app
+ * เพิ่มช่อง "ฝ่ายงานที่รับผิดชอบ"
  */
 
 const SPREADSHEET_ID = 'PASTE_YOUR_GOOGLE_SHEET_ID_HERE';
@@ -21,6 +15,7 @@ const HEADERS = [
   'amount',
   'vendor',
   'tax_id',
+  'department',
   'project_no',
   'created_at'
 ];
@@ -59,23 +54,29 @@ function doPost(e) {
 
     const sheet = getSheet();
     const type = String(data.type).trim();
-    const documentNo = String(data.document_no || '').trim() || generateDocumentNo(sheet, type);
-    const amount = Number(data.amount);
+    const documentNo =
+      String(data.document_no || '').trim() ||
+      generateDocumentNo(sheet, type);
 
-    const row = [
-      Utilities.getUuid(),
-      type,
-      documentNo,
-      String(data.date).trim(),
-      sanitizeText(data.subject),
-      amount,
-      sanitizeText(data.vendor),
-      String(data.tax_id).trim(),
-      sanitizeText(data.project_no),
-      new Date()
-    ];
+    const record = {
+      id: Utilities.getUuid(),
+      type: type,
+      document_no: documentNo,
+      date: String(data.date).trim(),
+      subject: sanitizeText(data.subject),
+      amount: Number(data.amount),
+      vendor: sanitizeText(data.vendor),
+      tax_id: String(data.tax_id).trim(),
+      department: sanitizeText(data.department),
+      project_no: sanitizeText(data.project_no),
+      created_at: new Date()
+    };
 
-    sheet.appendRow(row);
+    sheet.appendRow(
+      HEADERS.map(function(header) {
+        return record[header] !== undefined ? record[header] : '';
+      })
+    );
 
     return jsonOutput({
       success: true,
@@ -105,25 +106,95 @@ function getSheet() {
     sheet = spreadsheet.insertSheet(SHEET_NAME);
   }
 
-  const lastColumn = sheet.getLastColumn();
-  const hasHeaders = sheet.getLastRow() > 0 && lastColumn >= HEADERS.length;
-
-  if (!hasHeaders) {
-    sheet.clear();
-    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
-    sheet.setFrozenRows(1);
-    sheet.getRange(1, 1, 1, HEADERS.length)
-      .setFontWeight('bold')
-      .setBackground('#12385b')
-      .setFontColor('#ffffff');
-
-    sheet.getRange('F:F').setNumberFormat('#,##0.00');
-    sheet.getRange('D:D').setNumberFormat('@');
-    sheet.getRange('H:H').setNumberFormat('@');
-    sheet.getRange('I:I').setNumberFormat('@');
-  }
+  ensureHeaders(sheet);
+  applySheetFormatting(sheet);
 
   return sheet;
+}
+
+/**
+ * เพิ่มคอลัมน์ที่ขาดและเรียงคอลัมน์ใหม่โดยไม่ลบข้อมูลเดิม
+ */
+function ensureHeaders(sheet) {
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    return;
+  }
+
+  const lastRow = Math.max(sheet.getLastRow(), 1);
+  const lastColumn = Math.max(sheet.getLastColumn(), 1);
+  const values = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
+
+  const currentHeaders = values[0].map(function(value) {
+    return String(value).trim();
+  });
+
+  const alreadyCorrect =
+    currentHeaders.length >= HEADERS.length &&
+    HEADERS.every(function(header, index) {
+      return currentHeaders[index] === header;
+    });
+
+  if (alreadyCorrect) {
+    return;
+  }
+
+  const headerIndexes = {};
+  currentHeaders.forEach(function(header, index) {
+    if (header) {
+      headerIndexes[header] = index;
+    }
+  });
+
+  const reordered = [HEADERS.slice()];
+
+  for (let rowIndex = 1; rowIndex < values.length; rowIndex++) {
+    reordered.push(
+      HEADERS.map(function(header) {
+        const sourceIndex = headerIndexes[header];
+        return sourceIndex !== undefined
+          ? values[rowIndex][sourceIndex]
+          : '';
+      })
+    );
+  }
+
+  sheet.clearContents();
+  sheet
+    .getRange(1, 1, reordered.length, HEADERS.length)
+    .setValues(reordered);
+}
+
+function applySheetFormatting(sheet) {
+  sheet.setFrozenRows(1);
+
+  sheet
+    .getRange(1, 1, 1, HEADERS.length)
+    .setFontWeight('bold')
+    .setBackground('#b85c22')
+    .setFontColor('#ffffff');
+
+  sheet.getRange('D:D').setNumberFormat('@');
+  sheet.getRange('F:F').setNumberFormat('#,##0.00');
+  sheet.getRange('H:H').setNumberFormat('@');
+  sheet.getRange('I:I').setNumberFormat('@');
+  sheet.getRange('J:J').setNumberFormat('@');
+
+  sheet.autoResizeColumns(1, HEADERS.length);
+}
+
+function getHeaderMap(sheet) {
+  const headers = sheet
+    .getRange(1, 1, 1, sheet.getLastColumn())
+    .getDisplayValues()[0];
+
+  const map = {};
+
+  headers.forEach(function(header, index) {
+    map[String(header).trim()] = index;
+  });
+
+  return map;
 }
 
 function getAllDocuments() {
@@ -134,31 +205,47 @@ function getAllDocuments() {
     return [];
   }
 
-  const values = sheet.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
+  const headerMap = getHeaderMap(sheet);
+  const values = sheet
+    .getRange(2, 1, lastRow - 1, sheet.getLastColumn())
+    .getValues();
 
   return values
     .filter(function(row) {
-      return row[0];
+      return row[headerMap.id];
     })
     .map(function(row) {
       const item = {};
-      HEADERS.forEach(function(header, index) {
-        let value = row[index];
+
+      HEADERS.forEach(function(header) {
+        const index = headerMap[header];
+        let value = index !== undefined ? row[index] : '';
 
         if (value instanceof Date) {
           if (header === 'created_at') {
-            value = Utilities.formatDate(value, Session.getScriptTimeZone(), "yyyy-MM-dd'T'HH:mm:ss");
+            value = Utilities.formatDate(
+              value,
+              Session.getScriptTimeZone(),
+              "yyyy-MM-dd'T'HH:mm:ss"
+            );
           } else {
-            value = Utilities.formatDate(value, Session.getScriptTimeZone(), 'yyyy-MM-dd');
+            value = Utilities.formatDate(
+              value,
+              Session.getScriptTimeZone(),
+              'yyyy-MM-dd'
+            );
           }
         }
 
         item[header] = value;
       });
+
       return item;
     })
     .sort(function(a, b) {
-      return String(b.created_at).localeCompare(String(a.created_at));
+      return String(b.created_at).localeCompare(
+        String(a.created_at)
+      );
     });
 }
 
@@ -171,52 +258,93 @@ function generateDocumentNo(sheet, type) {
     return prefix + '-001/' + buddhistYear;
   }
 
-  const rows = sheet.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
+  const headerMap = getHeaderMap(sheet);
+  const rows = sheet
+    .getRange(2, 1, lastRow - 1, sheet.getLastColumn())
+    .getValues();
+
   let maxRunning = 0;
 
   rows.forEach(function(row) {
-    const rowType = String(row[1] || '');
-    const documentNo = String(row[2] || '');
-    const pattern = new RegExp('^' + prefix + '-(\\d+)\\/' + buddhistYear + '$');
+    const rowType = String(row[headerMap.type] || '');
+    const documentNo = String(row[headerMap.document_no] || '');
+    const pattern = new RegExp(
+      '^' + prefix + '-(\\d+)\\/' + buddhistYear + '$'
+    );
     const match = documentNo.match(pattern);
 
     if (rowType === type && match) {
-      maxRunning = Math.max(maxRunning, Number(match[1]) || 0);
+      maxRunning = Math.max(
+        maxRunning,
+        Number(match[1]) || 0
+      );
     }
   });
 
-  return prefix + '-' + String(maxRunning + 1).padStart(3, '0') + '/' + buddhistYear;
+  return (
+    prefix +
+    '-' +
+    String(maxRunning + 1).padStart(3, '0') +
+    '/' +
+    buddhistYear
+  );
 }
 
 function validateInput(data) {
-  const required = ['type', 'date', 'subject', 'amount', 'vendor', 'tax_id', 'project_no'];
+  const required = [
+    'type',
+    'date',
+    'subject',
+    'amount',
+    'vendor',
+    'tax_id',
+    'department',
+    'project_no'
+  ];
 
   required.forEach(function(field) {
     if (!String(data[field] || '').trim()) {
+      if (field === 'department') {
+        throw new Error('กรุณากรอกฝ่ายงานที่รับผิดชอบ');
+      }
+
       throw new Error('ข้อมูลไม่ครบ: ' + field);
     }
   });
 
-  if (['purchase', 'hire'].indexOf(String(data.type).trim()) === -1) {
+  if (
+    ['purchase', 'hire'].indexOf(
+      String(data.type).trim()
+    ) === -1
+  ) {
     throw new Error('ประเภทเอกสารไม่ถูกต้อง');
   }
 
   const amount = Number(data.amount);
+
   if (!isFinite(amount) || amount < 0) {
     throw new Error('จำนวนเงินไม่ถูกต้อง');
   }
 
   if (!/^\d{13}$/.test(String(data.tax_id).trim())) {
-    throw new Error('เลขประจำตัวผู้เสียภาษีต้องเป็นตัวเลข 13 หลัก');
+    throw new Error(
+      'เลขประจำตัวผู้เสียภาษีต้องเป็นตัวเลข 13 หลัก'
+    );
   }
 
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(data.date).trim())) {
+  if (
+    !/^\d{4}-\d{2}-\d{2}$/.test(
+      String(data.date).trim()
+    )
+  ) {
     throw new Error('รูปแบบวันที่ไม่ถูกต้อง');
   }
 }
 
 function sanitizeText(value) {
-  return String(value || '').trim().replace(/[<>]/g, '');
+  return String(value || '')
+    .trim()
+    .replace(/[<>]/g, '');
 }
 
 function jsonOutput(payload) {
